@@ -1,5 +1,5 @@
 import express from "express";
-import {protect} from "../../middleware/auth.middleware";
+import {protect} from "../middleware/auth.middleware";
 import {createExercise, deleteExercise, getExercises, updateExercise} from "./exercise.controller";
 import {createNewExerciseLog} from "./log/exercise-log.controller";
 import {getExerciseLog} from "./log/get-exercise-log.controller";

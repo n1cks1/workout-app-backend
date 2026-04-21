@@ -3,7 +3,7 @@ import authRoutes from "./app/auth/auth.routes.js";
 import userRoutes from "./app/user/user.routes.js";
 import morgan from 'morgan';
 import {prisma} from "./app/prisma.js";
-import {errorHandler, notFound} from "./middleware/error.middleware";
+import {errorHandler, notFound} from "./app/middleware/error.middleware";
 import exerciseRoutes from "./app/exercise/exercise.routes";
 import path from 'path'
 import workoutRoutes from "./app/workout/workout.routes";

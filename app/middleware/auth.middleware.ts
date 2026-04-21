@@ -1,9 +1,9 @@
 import expressAsyncHandler from "express-async-handler";
 import type {Request, Response, NextFunction} from 'express';
 import jwt from "jsonwebtoken";
-import {prisma} from "../app/prisma";
-import {userFields} from "../app/utils/user.utils";
-import type { IUserFields } from "../app/utils/user.utils";
+import {prisma} from "../prisma";
+import {userFields} from "../utils/user.utils";
+import type { IUserFields } from "../utils/user.utils";
 
 interface JwtPayload {
     userId: number;

@@ -1,5 +1,5 @@
 import express from "express";
-import {protect} from "../../middleware/auth.middleware";
+import {protect} from "../middleware/auth.middleware";
 import {createWorkout, deleteWorkout, getWorkouts, updateWorkout} from "./workout.controller";
 
 const router = express.Router()

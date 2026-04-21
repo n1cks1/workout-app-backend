@@ -1,7 +1,7 @@
 import expressAsyncHandler from "express-async-handler";
 import type {Request, Response} from "express";
 import {prisma} from "../../prisma";
-import type {reqUser} from "../../../middleware/auth.middleware";
+import type {reqUser} from "../../middleware/auth.middleware";
 import {addPrevValues, type ILog} from "./add-prev-values.util";
 import exerciseRoutes from "../exercise.routes";
 
