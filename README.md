@@ -14,7 +14,7 @@ REST backend for a workout tracking application.
 
 ## Tech Stack
 
-- Node.js / Bun
+- Node.js
 - Express
 - TypeScript
 - Prisma
@@ -22,7 +22,7 @@ REST backend for a workout tracking application.
 
 ## Requirements
 
-- Node.js or Bun
+- Node.js
 - PostgreSQL
 
 ## Installation
