@@ -7,6 +7,7 @@
 import expressAsyncHandler from "express-async-handler";
 import type {Request, Response} from "express";
 import {prisma} from "../../prisma";
+import exerciseRoutes from "../exercise.routes";
 
 export const updateExerciseLogTime = expressAsyncHandler( async (req: Request, res: Response) => {
     const { weight, repeat, isCompleted } = req.body
@@ -25,5 +26,34 @@ export const updateExerciseLogTime = expressAsyncHandler( async (req: Request, r
     } catch (error) {
         res.status(404)
         throw new Error("Exercise Time not found")
+    }
+})
+
+
+// @desc    Update status of complete exercise log
+// @route   PATCH /api/exercises/log/complete/:id
+// @access  Private
+export const completeExerciseLog = expressAsyncHandler( async (req: Request, res: Response) => {
+    const { isCompleted } = req.body
+
+
+    try {
+        const exerciseLog = await prisma.exerciseLog.update({
+            where: {
+                id: Number(req.params.logId)
+            },
+            data: {
+                isCompleted
+            },
+            include: {
+                exercise: true,
+                workoutLog: true
+            }
+        })
+
+        res.json(exerciseLog)
+    } catch (error) {
+        res.status(404)
+        throw new Error("Exercise Log not found")
     }
 })

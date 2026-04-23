@@ -3,7 +3,7 @@ import {protect} from "../middleware/auth.middleware";
 import {createExercise, deleteExercise, getExercises, updateExercise} from "./exercise.controller";
 import {createNewExerciseLog} from "./log/exercise-log.controller";
 import {getExerciseLog} from "./log/get-exercise-log.controller";
-import {updateExerciseLogTime} from "./log/update-exercise-log.controller";
+import {completeExerciseLog, updateExerciseLogTime} from "./log/update-exercise-log.controller";
 
 const router = express.Router()
 
@@ -15,4 +15,5 @@ router.delete('/:id', protect, deleteExercise)
 router.post("/log/:exerciseId", protect, createNewExerciseLog)
 router.get("/log/:logId", protect, getExerciseLog)
 router.put("/log/time/:id", protect, updateExerciseLogTime)
+router.patch("/log/:logId", protect, completeExerciseLog)
 export default router
