@@ -2,6 +2,7 @@ import expressAsyncHandler from "express-async-handler";
 import type {Request, Response} from "express";
 import {prisma} from "../prisma";
 import {Prisma} from "../../generated/prisma/client";
+import {calculateMinutes} from "./log/calculate-minutes";
 
 
 // @desc   Create new workout
@@ -22,7 +23,11 @@ export const createWorkout = expressAsyncHandler(async (req: Request, res: Respo
         }
     })
 
-    res.status(201).json(workout)
+    const minutes = calculateMinutes(workout.exercises.length)
+
+    res.json({ ...workout,
+        minute: minutes
+    })
 })
 
 // @desc   Get all exercises

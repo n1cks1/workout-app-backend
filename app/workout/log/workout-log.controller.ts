@@ -4,6 +4,10 @@ import {prisma} from "../../prisma";
 import type {reqUser} from "../../middleware/auth.middleware";
 
 
+
+// @desc    Create new workout log
+// @route   POST /api/workout/log/:workoutId
+// @access  Private
 export const createNewWorkoutLog = expressAsyncHandler( async (req: Request, res: Response) => {
     const workoutId = Number(req.params.workoutId)
 
