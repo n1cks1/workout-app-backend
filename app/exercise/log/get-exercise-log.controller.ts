@@ -44,3 +44,4 @@ export const getExerciseLog = expressAsyncHandler( async (req: Request, res: Res
         times: addPrevValues(exerciseLog, prevExerciseLog)
     })
 })
+
