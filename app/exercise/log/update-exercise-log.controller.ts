@@ -1,14 +1,11 @@
-
-
-
-// @desc    Update exercise time
-// @route   PUT /api/exercises/log/time/:id
-// @access  Private
 import expressAsyncHandler from "express-async-handler";
 import type {Request, Response} from "express";
 import {prisma} from "../../prisma";
 import exerciseRoutes from "../exercise.routes";
 
+// @desc    Update exercise time
+// @route   PUT /api/exercises/log/time/:id
+// @access  Private
 export const updateExerciseLogTime = expressAsyncHandler( async (req: Request, res: Response) => {
     const { weight, repeat, isCompleted } = req.body
 
@@ -31,7 +28,7 @@ export const updateExerciseLogTime = expressAsyncHandler( async (req: Request, r
 
 
 // @desc    Update status of complete exercise log
-// @route   PATCH /api/exercises/log/complete/:id
+// @route   PATCH /api/exercises/log/complete/:logId
 // @access  Private
 export const completeExerciseLog = expressAsyncHandler( async (req: Request, res: Response) => {
     const { isCompleted } = req.body

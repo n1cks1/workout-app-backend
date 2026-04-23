@@ -6,7 +6,7 @@ import {addPrevValues, type ILog} from "./add-prev-values.util";
 import exerciseRoutes from "../exercise.routes";
 
 // @desc    Get exercise log
-// @route   GET /api/exercises/log/:id
+// @route   GET /api/exercises/log/:logId
 // @access  private
 export const getExerciseLog = expressAsyncHandler( async (req: Request, res: Response) => {
     const exerciseLog = await prisma.exerciseLog.findUnique({
