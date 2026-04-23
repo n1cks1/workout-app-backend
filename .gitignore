@@ -50,6 +50,7 @@ Desktop.ini
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+.idea
 
 # Coverage
 coverage/
