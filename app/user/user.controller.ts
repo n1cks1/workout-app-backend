@@ -51,7 +51,9 @@ export const getProfile = expressAsyncHandler( async (req: Request, res: Respons
 
     const totalMinutes = calculateMinutes(exerciseCompleted)
 
-    res.json([
+    res.json({
+        ...user,
+        statistics: [
         {
             label: "minutes",
             value: totalMinutes
@@ -64,5 +66,5 @@ export const getProfile = expressAsyncHandler( async (req: Request, res: Respons
             label: "kilograms",
             value: timesCompleted._sum.weight
         }
-    ])
+    ]})
 })

@@ -6,7 +6,9 @@ import {prisma} from "./app/prisma.js";
 import {errorHandler, notFound} from "./app/middleware/error.middleware";
 import exerciseRoutes from "./app/exercise/exercise.routes";
 import path from 'path'
+import cors from 'cors'
 import workoutRoutes from "./app/workout/workout.routes";
+
 
 const app = express()
 const PORT = +(process.env.PORT || 3000)
@@ -15,6 +17,8 @@ async function main(): Promise<void> {
     if (process.env.NODE_ENV === "development") {
         app.use(morgan('dev'))
     }
+
+    app.use(cors())
     app.use(express.json())
 
 
