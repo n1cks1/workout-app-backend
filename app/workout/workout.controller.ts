@@ -1,118 +1,140 @@
-import expressAsyncHandler from "express-async-handler";
-import type {Request, Response} from "express";
-import {prisma} from "../prisma";
-import {Prisma} from "../../generated/prisma/client";
-import {calculateMinutes} from "./log/calculate-minutes";
-
+import type { Request, Response } from 'express'
+import expressAsyncHandler from 'express-async-handler'
+import { Prisma } from '../../generated/prisma/client'
+import { prisma } from '../prisma'
+import { calculateMinutes } from './log/calculate-minutes'
 
 // @desc   Create new workout
 // @route  POST /api/workout
 // @access Private
-export const createWorkout = expressAsyncHandler(async (req: Request, res: Response) => {
-    const {name, exerciseIds} = req.body;
+export const createWorkout = expressAsyncHandler(
+	async (req: Request, res: Response) => {
+		const { name, exerciseIds } = req.body
 
-    const workout = await prisma.workout.create({
-        data: {
-            name,
-            exercises: {
-                connect: exerciseIds.map((id: number) => ({id}))
-            }
-        },
-        include: {
-            exercises: true
-        }
-    })
+		const workout = await prisma.workout.create({
+			data: {
+				name,
+				exercises: {
+					connect: exerciseIds.map((id: number) => ({ id }))
+				}
+			},
+			include: {
+				exercises: true
+			}
+		})
 
-    const minutes = calculateMinutes(workout.exercises.length)
+		const minutes = calculateMinutes(workout.exercises.length)
 
-    res.json({ ...workout,
-        minute: minutes
-    })
-})
+		res.json({ ...workout, minute: minutes })
+	}
+)
 
 // @desc   Get all exercises
 // @route  GET /api/exercises
 // @access Private
-export const getWorkouts = expressAsyncHandler( async (req: Request, res: Response) => {
-    const workout = await prisma.workout.findMany({
-        orderBy: {createdAt: 'desc'},
-        include: {
-            exercises: true
-        }
-    })
+export const getWorkouts = expressAsyncHandler(
+	async (req: Request, res: Response) => {
+		const workout = await prisma.workout.findMany({
+			orderBy: { createdAt: 'desc' },
+			include: {
+				exercises: true
+			}
+		})
 
-
-
-    res.json(workout)
-})
-
-
+		res.json(workout)
+	}
+)
 
 // @desc   Update workout
 // @route  PUT /api/workout/:id
 // @access Private
-export const updateWorkout = expressAsyncHandler( async (req: Request, res: Response) => {
-    const {name, exerciseIds} = req.body
-    const id = Number(req.params.id)
+export const updateWorkout = expressAsyncHandler(
+	async (req: Request, res: Response) => {
+		const { name, exerciseIds } = req.body
+		const id = Number(req.params.id)
 
-    if (Number.isNaN(id)) {
-        res.status(400)
-        throw new Error("Invalid exercise id")
-    }
+		if (Number.isNaN(id)) {
+			res.status(400)
+			throw new Error('Invalid exercise id')
+		}
 
-    try {
-        const updateExercise = await prisma.workout.update({
-            where: {id},
-            data: {
-                name,
-                exercises: {
-                    set: exerciseIds.map((id: number) => ({id}))
-                }
-            },
-            include: {
-                exercises: true
-            }
-        })
+		try {
+			const updateExercise = await prisma.workout.update({
+				where: { id },
+				data: {
+					name,
+					exercises: {
+						set: exerciseIds.map((id: number) => ({ id }))
+					}
+				},
+				include: {
+					exercises: true
+				}
+			})
 
-        res.status(200).json(updateExercise)
-    } catch (error: unknown) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
-            res.status(404)
-            throw new Error("Exercise Not Found")
-        }
+			res.status(200).json(updateExercise)
+		} catch (error: unknown) {
+			if (
+				error instanceof Prisma.PrismaClientKnownRequestError &&
+				error.code === 'P2025'
+			) {
+				res.status(404)
+				throw new Error('Exercise Not Found')
+			}
 
-        throw error
-    }
-
-
-})
-
-
+			throw error
+		}
+	}
+)
 
 // @desc   Delete workout
 // @route  DELETE /api/delete/:id
 // @access Private
-export const deleteWorkout = expressAsyncHandler( async (req: Request, res: Response) => {
-    const id = Number(req.params.id)
+export const deleteWorkout = expressAsyncHandler(
+	async (req: Request, res: Response) => {
+		const id = Number(req.params.id)
 
-    if (Number.isNaN(id)) {
-        res.status(400)
-        throw new Error("Invalid exercise id")
-    }
+		if (Number.isNaN(id)) {
+			res.status(400)
+			throw new Error('Invalid exercise id')
+		}
 
-    try {
-        const deleteWorkout = await prisma.workout.delete({
-            where: {id}
-        })
+		try {
+			const deleteWorkout = await prisma.workout.delete({
+				where: { id }
+			})
 
-        res.status(200).json(deleteWorkout)
-    } catch(error: unknown) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
-            res.status(404)
-            throw new Error("Exercise Not Found")
-        }
+			res.status(200).json(deleteWorkout)
+		} catch (error: unknown) {
+			if (
+				error instanceof Prisma.PrismaClientKnownRequestError &&
+				error.code === 'P2025'
+			) {
+				res.status(404)
+				throw new Error('Exercise Not Found')
+			}
 
-        throw error
-    }
+			throw error
+		}
+	}
+)
 
-})
+export const getSingleWorkout = expressAsyncHandler(
+	async (req: Request, res: Response) => {
+		const singleWorkout = await prisma.workout.findUnique({
+			where: {
+				id: Number(req.params.id)
+			},
+			include: {
+				exercises: true
+			}
+		})
+
+		if (!singleWorkout) {
+			res.status(404)
+			throw new Error('Workout not found')
+		}
+
+		res.json(singleWorkout)
+	}
+)

@@ -19,7 +19,7 @@ const router = express.Router()
 router.post('/', protect, createExercise)
 router.get('/', protect, getExercises)
 router.put('/:id', protect, updateExercise)
-router.get('/:id', protect, getSingleExercise)
+router.get('/:id', protect, getSingleExercise) //возможно будет нужно
 router.delete('/:id', protect, deleteExercise)
 
 router.post('/log/:exerciseId', protect, createNewExerciseLog)
