@@ -1,79 +1,48 @@
 # workout-app-backend
 
-Backend API for a workout tracking app built with Express, TypeScript, Prisma, and PostgreSQL.
+Backend API for a workout tracking application built with Bun, Express,
+TypeScript, Prisma, PostgreSQL, and Docker.
 
-## Description
+---
 
-REST backend for a workout tracking application.
+# 🚀 First start (IMPORTANT)
 
-### Features
-- User authentication
-- Workout and exercise management
-- Exercise logs and workout logs
-- Prisma ORM for database access
+## 1. Create .env file
 
-## Tech Stack
+DATABASE_URL=your_database_url JWT_SECRET=your_secret PORT=3000
 
-- Node.js
-- Express
-- TypeScript
-- Prisma
-- PostgreSQL
+---
 
-## Requirements
+## 2. Start project (build + run everything)
 
-- Node.js
-- PostgreSQL
+docker compose up --build
 
-## Installation
+---
 
-### npm
-```bash
-npm install
-```
+## 3. Create database tables (FIRST TIME ONLY)
 
-### bun
-```bash
+docker compose exec backend bunx prisma db push
+
+---
+
+## 4. Generate Prisma client (FIRST TIME + after schema changes)
+
+docker compose exec backend bunx prisma generate
+
+---
+
+# ▶️ Normal start (after setup)
+
+docker compose up
+
+---
+
+# 🛑 Stop project
+
+docker compose down
+
+# ⚙️ Local run (without Docker)
+
 bun install
-```
 
-## Environment variables
-
-Create a `.env` file based on the expected variables from `env.d.ts`.
-
-Example:
-```env
-DATABASE_URL=
-JWT_SECRET=
-PORT=3000
-```
-
-## Database
-
-Run migrations:
-
-### npm
-```bash
-npx prisma migrate dev
-npx prisma generate
-```
-
-### bun
-```bash
-bunx --bun prisma migrate dev
-bunx --bun prisma generate
-```
-
-## Development
-
-Start the development server:
-
-### npm
-```bash
-npm run dev
-```
-
-### bun
-```bash
-bun run dev
-```
+bunx prisma generate bunx prisma db push bun run dev
