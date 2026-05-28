@@ -9,13 +9,14 @@ import {prisma} from "../../prisma";
 // @access  Private
 export const updateCompleteWorkoutLog = expressAsyncHandler (async (req: Request, res: Response) => {
     const workoutLogId = Number(req.params.workoutLogId)
+    const statusCompleted: boolean = req.body.statusCompleted
     try {
         const workoutLog = await prisma.workoutLog.update({
             where: {
                 id: workoutLogId
             },
             data: {
-                isCompleted: true
+                isCompleted: statusCompleted
             }
         })
 
