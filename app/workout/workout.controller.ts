@@ -127,7 +127,8 @@ export const getSingleWorkout = expressAsyncHandler(
         id: Number(req.params.id),
       },
       include: {
-        exercises: true,
+        exercises: true, 
+          workoutLogs: true,
       },
     });
 

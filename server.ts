@@ -8,6 +8,7 @@ import exerciseRoutes from "./app/exercise/exercise.routes";
 import path from 'path'
 import cors from 'cors'
 import workoutRoutes from "./app/workout/workout.routes";
+import { swaggerUi, swaggerSpec } from './app/swagger';
 
 
 const app = express()
@@ -23,13 +24,14 @@ async function main(): Promise<void> {
 
 
     const __dirname = path.resolve()
-    app.use('/exercises', express.static(path.join(__dirname, "/exercises/")));
+    app.use('/exercises', express.static(path.join(__dirname, "../exercises")));
 
 
     app.use('/api/auth', authRoutes)
     app.use('/api/users', userRoutes)
     app.use('/api/exercises', exerciseRoutes)
     app.use('/api/workout', workoutRoutes)
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     app.use(notFound)
     app.use(errorHandler)
